@@ -1,0 +1,1 @@
+Projeto utilizando JSF + JPA + Primefaces + Maven

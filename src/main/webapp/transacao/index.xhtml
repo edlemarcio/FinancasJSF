@@ -1,0 +1,85 @@
+<ui:composition template="/WEB-INF/templates/template.xhtml"
+                                                xmlns="http://www.w3.org/1999/xhtml"
+                                              xmlns:h="http://java.sun.com/jsf/html"
+                                              xmlns:f="http://java.sun.com/jsf/core"
+                                              xmlns:ui="http://java.sun.com/jsf/facelets"
+                                              xmlns:p="http://primefaces.org/ui">
+<ui:define name="title">#{res.transactions}</ui:define>
+<ui:define name="style">
+	<style type="text/css">
+		td.red_bg {
+			color: white;
+			background-color: red;
+			
+		}
+		
+		td.green_bg {
+			color: white;
+			background-color: green;
+		}
+	</style>
+</ui:define>
+<ui:define name="conteudo">
+
+<h:form id="form">
+<p:growl id="growl" showDetail="true" sticky="true" />
+        <h:inputHidden value="#{transacaoMBean.t.id}" />
+        <p:panelGrid columns="2" style="max-width:950px">
+        	<f:facet name="header">#{res.transaction}</f:facet>
+        	
+       		<h:outputLabel value="#{res.value} R$" style="text-align: left;"/>
+            <p:inputText value="#{transacaoMBean.t.valor}" size="20">
+            	    <f:convertNumber minFractionDigits="2" locale="pt_BR"/>  
+			</p:inputText>
+            <h:outputText value="#{res.type}" style="text-align: left;" />
+            <p:selectOneMenu value="#{transacaoMBean.t.tipo}" style="width: 200px;">
+             <f:selectItem itemLabel="Selecione o tipo" itemValue="" />
+             <f:selectItem itemLabel="#{res.in}" itemValue="ENTRADA" />
+             <f:selectItem itemLabel="#{res.out}" itemValue="SAIDA" />                
+            </p:selectOneMenu>
+             <h:outputLabel value="#{res.description}" />
+             <p:inputText value="#{transacaoMBean.t.descricao}" size="95"/>
+             <h:outputLabel value="#{res.date}" />
+             <p:calendar value="#{transacaoMBean.t.data}" id="ptCal" readonlyInput="true" locale="pt_BR" pattern="dd/MM/yyyy"/>                                
+	         <f:facet name="footer">
+	                 <p:commandButton value="#{res.save}" actionListener="#{transacaoMBean.save}" update="growl" ajax="false"/>
+	                 <p:commandButton value="#{res.cancel}" actionListener="#{transacaoMBean.cancel}" update="growl" ajax="false"/>        
+	         </f:facet>
+        </p:panelGrid>
+</h:form>
+<br />
+<h:form id="formTable">
+    <p:dataTable id="Tr" var="transacoes" value="#{transacaoMBean.transacoes}" style="max-width: 950px;"
+    			 rowStyleClass="" >                         
+        <f:facet name="header">
+                  #{res.balance_now}
+            <h:outputText value="#{transacaoMBean.total}" >
+                    <f:convertNumber minFractionDigits="2" locale="pt_BR" type="currency" currencySymbol="R$"/>
+            </h:outputText>
+        </f:facet>
+        <p:column sortBy="data" headerText="#{res.date}">
+            <h:outputText value="#{transacoes.data}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+            </h:outputText>
+        </p:column>
+        <p:column sortBy="tipo" headerText="#{res.type}" >         
+                <h:outputText value="#{transacoes.tipo}" />
+        </p:column>
+        <p:column sortBy="descricao" headerText="#{res.description}">         
+            <h:outputText value="#{transacoes.descricao}" />
+        </p:column>
+        <p:column sortBy="valor" headerText="#{res.value}" styleClass="#{(transacoes.tipo == 'ENTRADA') eq true ? 'green_bg' : 'red_bg'}" emptyMessage="#{res.records_not_found}">
+            <h:outputText value="#{transacoes.valor}" >
+                    <f:convertNumber minFractionDigits="2" locale="pt_BR" type="currency"/>
+            </h:outputText>
+        </p:column>        
+        <p:column headerText="#{res.edit}" exportable="false" >
+        		<h:commandLink value="#{res.edit}" action="#{transacaoMBean.preparaEdit(transacoes.id)}"/>        	
+        </p:column>
+        <p:column headerText="#{res.remove}" exportable="false">	
+				<h:commandLink value="#{res.remove}" action="#{transacaoMBean.removeTransacao(transacoes.id)}"/>			                      
+        </p:column>
+    </p:dataTable>  
+</h:form>          
+</ui:define>
+</ui:composition>
