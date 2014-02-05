@@ -1,23 +1,14 @@
 package controller;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.persistence.EntityManager;
-import javax.servlet.http.HttpServletRequest;
 
 import repositories.TransacaoRepository;
-
-import com.lowagie.text.BadElementException;
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.PageSize;
 
 import model.Transacao;
 
@@ -30,8 +21,9 @@ import model.Transacao;
 @ManagedBean
 @RequestScoped
 public class TransacaoMBean {
+	
 	private Transacao t = new Transacao();
-
+	private TransacaoRepository repository = new TransacaoRepository();
 	/**
 	 * Usa essa lista de transações pra poder usar o sort na tabela selecionada
 	 */
@@ -54,8 +46,6 @@ public class TransacaoMBean {
 	 * Salvar ou editar uma transação
 	 */
 	public void save() {
-		EntityManager manager = this.getEntityManager();
-		TransacaoRepository repository = new TransacaoRepository(manager);
 
 		if (t.getId() == 0) {
 			if (this.isValid()) {
@@ -83,8 +73,7 @@ public class TransacaoMBean {
 	 * @param id
 	 */
 	public void preparaEdit(Long id) {
-		EntityManager manager = this.getEntityManager();
-		TransacaoRepository repository = new TransacaoRepository(manager);
+		
 		this.t = repository.procura(id);
 	}
 
@@ -92,10 +81,7 @@ public class TransacaoMBean {
 	 * Remove uma transação
 	 */
 	public void removeTransacao(Long id) {
-		EntityManager manager = this.getEntityManager();
-		TransacaoRepository rep = new TransacaoRepository(manager);
-
-		rep.remove(id);
+		repository.remove(id);
 		this.t = null;
 	}
 
@@ -110,10 +96,7 @@ public class TransacaoMBean {
 		// os dados
 		// se tiver retorna ela
 		if (transacoesList == null) {
-			EntityManager manager = this.getEntityManager();
-			TransacaoRepository rep = new TransacaoRepository(manager);
-			this.transacoesList = rep.buscaTodos();
-
+			this.transacoesList = repository.buscaTodos();
 			return transacoesList;
 		} else {
 			return this.transacoesList;
@@ -126,42 +109,11 @@ public class TransacaoMBean {
 	 * @return
 	 */
 	public BigDecimal getTotal() {
-		EntityManager manager = this.getEntityManager();
-		TransacaoRepository rep = new TransacaoRepository(manager);
-		return rep.buscaTotal();
+		return repository.buscaTotal();
 	}
 
-	/**
-	 * Método Do EntityManager
-	 * 
-	 * @return
-	 */
-	private final EntityManager getEntityManager() {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		ExternalContext ec = fc.getExternalContext();
-		HttpServletRequest request = (HttpServletRequest) ec.getRequest();
-		EntityManager manager = (EntityManager) request
-				.getAttribute("EntityManager");
-		return manager;
-	}
-
-	/**
-	 * Personaliza o PDF
-	 * 
-	 * @param document
-	 * @throws IOException
-	 * @throws BadElementException
-	 * @throws DocumentException
-	 */
-	public void preProcessPDF(Object document) throws IOException,
-			BadElementException, DocumentException {
-		Document pdf = (Document) document;
-
-		pdf.open();
-
-		pdf.setPageSize(PageSize.A4);
-	}
-
+	
+	
 	/**
 	 * Verifica se todos os campos foram preenchidos corretamente.
 	 * 

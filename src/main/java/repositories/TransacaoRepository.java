@@ -3,14 +3,25 @@ package repositories;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.servlet.http.HttpServletRequest;
 
 import model.TipoTransacao;
 import model.Transacao;
 
+/**
+ * Classe que trata os dados de transação
+ * @author ccruz
+ *
+ */
 public class TransacaoRepository {
 
+	/**
+	 * Eentity manager
+	 */
 	private EntityManager manager;
 	
 	/**
@@ -18,8 +29,8 @@ public class TransacaoRepository {
 	 * Inicia o entityManage
 	 * @param manager
 	 */
-	public TransacaoRepository(EntityManager manager) {
-		this.manager = manager;
+	public TransacaoRepository() {
+		manager = this.getEntityManager();
 	}
 	
 	/**
@@ -34,7 +45,7 @@ public class TransacaoRepository {
 	}
 	
 	/**
-	 * Remove uma determinada transa��o
+	 * Remove uma determinada transação
 	 * @param id
 	 */
 	public void remove(Long id) {
@@ -96,6 +107,20 @@ public class TransacaoRepository {
 			return total;
 		}
 		
+	}
+	
+	/**
+	 * Instancia o EM
+	 * 
+	 * @return
+	 */
+	private final EntityManager getEntityManager() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		ExternalContext ec = fc.getExternalContext();
+		HttpServletRequest request = (HttpServletRequest) ec.getRequest();
+		EntityManager manager = (EntityManager) request
+				.getAttribute("EntityManager");
+		return manager;
 	}
 	
 }

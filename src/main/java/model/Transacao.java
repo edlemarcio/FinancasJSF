@@ -14,7 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 /**
- * Entidade que representar uma transa��o, que pode ser, do tipo entrada, que soma, ou saida
+ * Entidade que representar uma transação, que pode ser, do tipo entrada, que soma, ou saida
  * que subtrai do valor total;
  * @author ccruz
  *
@@ -51,15 +51,7 @@ public class Transacao implements Serializable {
 	/**
 	 * Data da transação
 	 */
-	private Date data;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
+	private Date data;	
 	
 	/**
 	 * Verifica antes se o valor for negativo, retorna positivo 
@@ -77,6 +69,14 @@ public class Transacao implements Serializable {
 			
 	}
 
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	
 	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
