@@ -49,12 +49,12 @@ public class TransacaoMBean {
 
 		if (t.getId() == 0) {
 			if (this.isValid()) {
-				repository.adiciona(t);
+				repository.save(t);
 				t = new Transacao();
 			}
 		} else {
 			if (this.isValid()) {
-				repository.edita(t);
+				repository.edit(t);
 				t = new Transacao();
 			}
 		}
@@ -74,14 +74,14 @@ public class TransacaoMBean {
 	 */
 	public void preparaEdit(Long id) {
 		
-		this.t = repository.procura(id);
+		this.t = repository.findById(id);
 	}
 
 	/**
 	 * Remove uma transação
 	 */
 	public void removeTransacao(Long id) {
-		repository.remove(id);
+		repository.remove(repository.findById(id));
 		this.t = null;
 	}
 
@@ -96,7 +96,7 @@ public class TransacaoMBean {
 		// os dados
 		// se tiver retorna ela
 		if (transacoesList == null) {
-			this.transacoesList = repository.buscaTodos();
+			this.transacoesList = repository.findAll();
 			return transacoesList;
 		} else {
 			return this.transacoesList;
