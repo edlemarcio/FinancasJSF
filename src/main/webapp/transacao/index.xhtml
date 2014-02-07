@@ -76,7 +76,7 @@
         <p:column headerText="#{res.edit}" exportable="false" >
         		<h:commandLink value="#{res.edit}" action="#{transacaoMBean.preparaEdit(transacoes.id)}"/>        	
         </p:column>
-        <p:column headerText="#{res.remove}" exportable="false">	
+        <p:column headerText="#{res.remove}" exportable="false" rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN')}">	
 				<h:commandLink value="#{res.remove}" action="#{transacaoMBean.removeTransacao(transacoes.id)}"/>			                      
         </p:column>
     </p:dataTable>  

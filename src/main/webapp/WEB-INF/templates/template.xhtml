@@ -44,7 +44,8 @@
 			<p:menuitem value="#{res.home}" icon="ui-icon-home" url="/"/>
 			<p:submenu label="#{res.transactions}" icon="ui-icon-shuffle">
 				<p:menuitem value="#{res.transaction_manager}"  url="/transacao/"/>
-			</p:submenu>												
+			</p:submenu>
+			<p:menuitem value="Sair" url="/j_spring_security_logout" rendered="#{facesContext.externalContext.isUserInRole('ROLE_ADMIN or ROLE_FUNC')}"/>												
 		</p:menubar>
 	</h:form>
 	</nav>
