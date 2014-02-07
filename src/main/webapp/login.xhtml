@@ -1,48 +1,33 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.prime.com.tr/ui">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
-<f:view>
-	<h:head>
-		<title>Locadora</title>
+<h:head>
+	<title>#{res.security_zone}</title>
+</h:head>
 
-		<style type="text/css">
-.ui-widget {
-	font-size: 10px;
-	!
-	important;
-}
-</style>
-	</h:head>
+<h:body>
+	<p:dialog header="#{res.security_zone}" modal="false" closable="false"
+		position="center" widgetVar="modalLogin" minWidth="300" width="300"
+		showEffect="shake" draggable="false" resizable="false" visible="true">
+		<h:outputText value="#{res.pass_or_invalid_user}"
+			rendered="#{param.error}"
+			style="color:darkred; font-size: 14px; padding-bottom: 10px;" />
 
-	<h:body>
-		<p:dialog header="Locadora - Faça login para entrar no sistema"
-			modal="false" closable="false" position="center"
-			widgetVar="modalLogin" minWidth="300" width="300" showEffect="slide"
-			draggable="false" resizable="false" visible="true">
+		<form action="j_spring_security_check" method="post">
+			<h:panelGrid columns="2" cellpadding="3" style="font-weight: bold;">
+				<h:outputLabel for="j_username" value="* #{res.user}:" />
+				<h:inputText id="j_username" size="15" />
 
-			<center>
-				<h:outputText value="Usuário e/  ou senha inválidos!"
-					rendered="#{param.error}"
-					style="color:darkred; font-size: 14px; padding-bottom: 10px;" />
-
-				<form action="j_spring_security_check" method="post">
-					<h:panelGrid columns="2" cellpadding="3" style="font-weight: bold;">
-						<h:outputLabel for="j_username" value="* Usuário:" />
-						<h:inputText id="j_username" size="15" />
-
-						<h:outputLabel for="j_password" value="* Senha:" />
-						<h:inputSecret id="j_password" size="15" />
-					</h:panelGrid>
-					<h:commandButton value="Entrar" />
-				</form>
-			</center>
-		</p:dialog>
-	</h:body>
-</f:view>
+				<h:outputLabel for="j_password" value="* #{res.password}:" />
+				<h:inputSecret id="j_password" size="15" />
+			</h:panelGrid>
+			<h:commandButton value="#{res.enter}" ajax="false" />
+		</form>
+	</p:dialog>
+</h:body>
 </html>

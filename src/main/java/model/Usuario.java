@@ -13,7 +13,7 @@ public class Usuario {
 	private String password;
 	private String authority;
 	
-	
+		
 	public String getUsername() {
 		return username;
 	}
@@ -33,6 +33,8 @@ public class Usuario {
 		this.authority = authority;
 	}
 	
-	
+	public boolean isActive(){
+		return true;
+	}
 	
 }
