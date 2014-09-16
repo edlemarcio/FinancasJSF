@@ -121,17 +121,23 @@ public class TransacaoMBean {
 	private boolean isValid() {
 		FacesContext context = FacesContext.getCurrentInstance();
 
-		// Validando o campo valor
-		if (this.t.getValor().toString().equals("0")
-				|| this.t.getValor().toString().equals("")
-				|| this.t.getValor().toString().equals("0.00")
-				|| this.t.getValor().toString().equals("0.0")) {
-			context.addMessage(null, new FacesMessage(
-					FacesMessage.SEVERITY_WARN, "Campo inválido",
-					"O campo valor deve ser preenchido corretamente"));
+		try {
+			// Validando o campo valor
+			if (this.t.getValor().toString().equals("0")
+					|| this.t.getValor().toString().equals("")
+					|| this.t.getValor().toString().equals("0.00")
+					|| this.t.getValor().toString().equals("0.0")) {
+				context.addMessage(null, new FacesMessage(
+						FacesMessage.SEVERITY_WARN, "Campo inválido",
+						"O campo valor deve ser preenchido corretamente"));
+				return false;
+			} else {
+				return true;
+			}
+		} catch (Exception e) {			
 			return false;
-		} else {
-			return true;
 		}
+		
+		
 	}
 }
