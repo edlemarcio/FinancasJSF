@@ -1,4 +1,4 @@
-package model;
+package br.org.financas.entities;
 
 public class TipoTransacao {
 	

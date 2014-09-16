@@ -1,4 +1,4 @@
-package repositories;
+package br.org.financas.models;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -9,15 +9,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 
-import model.TipoTransacao;
-import model.Transacao;
+import br.org.financas.entities.TipoTransacao;
+import br.org.financas.entities.Transacao;
 
 /**
  * Classe que trata os dados de transação
  * @author ccruz
  *
  */
-public class TransacaoRepository implements IRepository<Transacao> {
+public class TransacaoModel implements IModel<Transacao> {
 	/**
 	 * Eentity manager
 	 */
@@ -28,7 +28,7 @@ public class TransacaoRepository implements IRepository<Transacao> {
 	 * Inicia o entityManage
 	 * @param manager
 	 */
-	public TransacaoRepository() {
+	public TransacaoModel() {
 		manager = this.getEntityManager();
 	}
 			

@@ -1,4 +1,4 @@
-package controller;
+package br.org.financas.mbeans;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -8,9 +8,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
-import repositories.TransacaoRepository;
-
-import model.Transacao;
+import br.org.financas.entities.Transacao;
+import br.org.financas.models.TransacaoModel;
 
 /**
  * MBean das transações
@@ -23,7 +22,7 @@ import model.Transacao;
 public class TransacaoMBean {
 	
 	private Transacao t = new Transacao();
-	private TransacaoRepository repository = new TransacaoRepository();
+	private TransacaoModel repository = new TransacaoModel();
 	/**
 	 * Usa essa lista de transações pra poder usar o sort na tabela selecionada
 	 */

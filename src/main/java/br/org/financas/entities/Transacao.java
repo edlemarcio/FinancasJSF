@@ -1,8 +1,9 @@
-package model;
+package br.org.financas.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+
 
 
 
@@ -11,7 +12,9 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.TableGenerator;
 
 /**
  * Entidade que representar uma transação, que pode ser, do tipo entrada, que soma, ou saida
@@ -27,7 +30,9 @@ public class Transacao implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Id @GeneratedValue
+	@Id
+	@TableGenerator(name = "TABLE_GENERATOR", table = "SEQUENCE_TABLE", pkColumnName = "TABLE_NAME", pkColumnValue = "TRANSACAO_ID", valueColumnName = "TABLE_VALUE", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "TABLE_GENERATOR")
 	private long id;
 	
 	/**

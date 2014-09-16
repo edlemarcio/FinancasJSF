@@ -1,4 +1,4 @@
-package repositories;
+package br.org.financas.models;
 
 import java.util.List;
 
@@ -8,13 +8,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 
-import model.Usuario;
+import br.org.financas.entities.Usuario;
 
-public class UsuarioRepository implements IRepository<Usuario> {
+public class UsuarioModel implements IModel<Usuario> {
 	
 	private EntityManager manager;
 	
-	public UsuarioRepository(){
+	public UsuarioModel(){
 		manager = this.getEntityManager();
 	}
 	

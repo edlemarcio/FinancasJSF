@@ -1,4 +1,4 @@
-package repositories;
+package br.org.financas.models;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @param <T>
  */
-public interface IRepository<T> {
+public interface IModel<T> {
 	/**
 	 * Salva um objeto
 	 * @param t

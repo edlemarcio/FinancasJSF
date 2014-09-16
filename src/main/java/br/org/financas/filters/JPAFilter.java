@@ -1,4 +1,4 @@
-package filters;
+package br.org.financas.filters;
 
 import java.io.IOException;
 
